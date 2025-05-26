@@ -12,7 +12,6 @@ class SecureFileEraser(QWidget):
 
     def init_ui(self):
         """Initializes the UI"""
-
         self.setWindowTitle("Secure File Eraser")
         self.setGeometry(200, 200, 400, 300)
 
@@ -29,17 +28,17 @@ class SecureFileEraser(QWidget):
         self.select_button.setStyleSheet("""
         
                 QPushButton {
-                background-color: #FF0000;
-                color: white
-                border-radius: 5px;
-                padding: 10px;
-                font-size: bold;
+                    background-color: #FF0000;
+                    color: white
+                    border-radius: 5px;
+                    padding: 10px;
+                    font-size: 14px;
                 }
                 QPushButton:hover {
-                background-color: #950c02;
+                    background-color: #950c02;
                }
-        """
-        )
+            """
+                                         )
         self.select_button.clicked.connect(self.select_file)
         layout.addWidget(self.select_button)
 
@@ -78,8 +77,22 @@ class SecureFileEraser(QWidget):
 
     def select_file(self):
         """Opens a file dialog for choosing the file to delete"""
+
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getOpenFileName(self, "Select File to Delete")
+
+        if file_path:
+            self.file_path = file_path
+            self.lable.setText(f"Selected: {os.path.basename(file_path)}")
         pass
 
     def securely_delete(self, file_path):
         """overwrites and deletes the file"""
         pass
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = SecureFileEraser()
+    window.show()
+    sys.exit(app.exec_())
